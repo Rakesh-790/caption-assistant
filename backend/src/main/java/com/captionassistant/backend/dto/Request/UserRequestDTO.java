@@ -1,10 +1,12 @@
-package com.captionassistant.backend.dto;
+package com.captionassistant.backend.dto.Request;
 
 import lombok.Data;
 
 @Data
 public class UserRequestDTO {
+
     private String username;
+
 
     private String password;
 

@@ -1,6 +1,7 @@
 package com.captionassistant.backend.constants;
 
-public enum Role {
-    USER,
-    ADMIN
+public enum Tone {
+    HAPPY,
+    SAD,
+    ANGRY
 }

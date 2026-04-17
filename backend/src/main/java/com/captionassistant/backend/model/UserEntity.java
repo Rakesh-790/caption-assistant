@@ -1,6 +1,7 @@
 package com.captionassistant.backend.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.captionassistant.backend.constants.Role;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -34,4 +36,10 @@ public class UserEntity {
 
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "user")
+    private List<CaptionEntity> captions;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<ImageEntity> images;
 }

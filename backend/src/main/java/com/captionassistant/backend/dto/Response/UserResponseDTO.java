@@ -1,4 +1,4 @@
-package com.captionassistant.backend.dto;
+package com.captionassistant.backend.dto.Response;
 
 import java.time.LocalDateTime;
 

@@ -1,6 +1,6 @@
 package com.captionassistant.backend.constants;
 
-public enum Role {
-    USER,
-    ADMIN
+public enum Language {
+    HINDI,
+    ENGLISH
 }

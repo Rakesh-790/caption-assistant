@@ -3,9 +3,9 @@ package com.captionassistant.backend.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.captionassistant.backend.dto.AuthRequestDTO;
-import com.captionassistant.backend.dto.AuthResponseDTO;
-import com.captionassistant.backend.dto.UserRequestDTO;
+import com.captionassistant.backend.dto.Request.AuthRequestDTO;
+import com.captionassistant.backend.dto.Request.UserRequestDTO;
+import com.captionassistant.backend.dto.Response.AuthResponseDTO;
 import com.captionassistant.backend.service.IService.IAuthService;
 
 import lombok.RequiredArgsConstructor;
