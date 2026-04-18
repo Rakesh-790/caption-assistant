@@ -17,4 +17,6 @@ public class CaptionCreateRequestDTO {
     private Platform platform;
 
     private Tone tone;
+
+    private Long groupId;
 }

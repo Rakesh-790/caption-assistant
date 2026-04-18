@@ -29,6 +29,12 @@ public class CaptionMapper {
             dto.setImageId(caption.getImage().getImageId());
         }
 
+        dto.setAiCaption(caption.getAiCaption());
+
+        if (caption.getGroup() != null) {
+            dto.setGroupId(caption.getGroup().getGroupId());
+        }
+
         return dto;
     }
 

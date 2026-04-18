@@ -1,5 +1,7 @@
 server:
     port: 1500
+    servlet:
+        context-path: /caption-assistant
 
 spring:
     datasource:

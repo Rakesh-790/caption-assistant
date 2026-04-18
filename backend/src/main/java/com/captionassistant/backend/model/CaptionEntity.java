@@ -2,6 +2,8 @@ package com.captionassistant.backend.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.captionassistant.backend.constants.Language;
 import com.captionassistant.backend.constants.Platform;
 import com.captionassistant.backend.constants.Tone;
@@ -10,6 +12,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,12 +29,12 @@ public class CaptionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long captionId;
 
-    private String groupId;
-
     private String prompt;
 
     private String aiCaption;
 
+    @Column(updatable = false, nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
@@ -46,11 +49,15 @@ public class CaptionEntity {
     @Enumerated(EnumType.STRING)
     private Tone tone;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    private UserEntity user; 
+    private UserEntity user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id", referencedColumnName = "imageId")
     private ImageEntity image;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private CaptionGroup group;
 }

@@ -25,4 +25,8 @@ public class CaptionResponseDTO {
     private Long imageId;
 
     private LocalDateTime createdAt;
+
+    private String aiCaption;
+    
+    private Long groupId;
 }
