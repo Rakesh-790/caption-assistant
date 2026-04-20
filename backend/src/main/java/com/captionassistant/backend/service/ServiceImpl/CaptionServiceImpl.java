@@ -1,5 +1,11 @@
 package com.captionassistant.backend.service.ServiceImpl;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +30,6 @@ public class CaptionServiceImpl implements ICaptionService {
     private final CaptionRepository captionRepository;
     private final UserRepository userRepository;
     private final CaptionGroupRepository captionGroupRepository;
-
 
     @Override
     public CaptionResponseDTO createCaption(CaptionCreateRequestDTO requestDTO) {
@@ -66,5 +71,34 @@ public class CaptionServiceImpl implements ICaptionService {
         captionRepository.save(caption);
 
         return CaptionMapper.toDTO(caption);
+    }
+
+    @Override
+    public List<CaptionResponseDTO> getCaptionsByGroup(Long groupId) {
+
+        CaptionGroup group = captionGroupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        if (!group.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Unauthorized");
+        }
+
+        List<CaptionEntity> captions = captionRepository.findByGroup_GroupId(groupId);
+
+        return CaptionMapper.toDTOList(captions);
+    }
+
+    @Override
+    public Page<CaptionResponseDTO> getCaptionsByGroupPage(Long groupId, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+        Page<CaptionEntity> captionPage = captionRepository.findByGroup_GroupId(groupId, pageable);
+
+        return captionPage.map(CaptionMapper::toDTO);
     }
 }

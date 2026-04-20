@@ -32,6 +32,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/captions").hasRole("USER")
+                .requestMatchers("/group/**").hasRole("USER")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

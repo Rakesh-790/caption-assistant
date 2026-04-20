@@ -57,7 +57,7 @@ public class CaptionEntity {
     @JoinColumn(name = "image_id", referencedColumnName = "imageId")
     private ImageEntity image;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private CaptionGroup group;
 }
