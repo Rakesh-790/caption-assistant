@@ -20,4 +20,4 @@ jwt:
 ollama:
     api:
         url: http://localhost:11434/api/generate
-        model: qwen2.5:3b
+        model: qwen2.5vl:3b

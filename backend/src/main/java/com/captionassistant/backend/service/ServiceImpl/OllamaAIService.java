@@ -1,18 +1,21 @@
 package com.captionassistant.backend.service.ServiceImpl;
 
+import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.captionassistant.backend.dto.Request.CaptionCreateRequestDTO;
-import com.captionassistant.backend.dto.Request.OllamaRequestDTO;
+import com.captionassistant.backend.dto.Request.OllamaVisionRequestDTO;
 import com.captionassistant.backend.dto.Response.OllamaResponseDTO;
 import com.captionassistant.backend.service.IService.IAIService;
 
 import lombok.RequiredArgsConstructor;
 
-@Primary
 @Service
 @RequiredArgsConstructor
 public class OllamaAIService implements IAIService {
@@ -24,14 +27,23 @@ public class OllamaAIService implements IAIService {
     @Value("${ollama.api.model}")
     private String model;
 
-    public String generateCaption(CaptionCreateRequestDTO createRequestDTO) {
+    public String generateCaption(CaptionCreateRequestDTO createRequestDTO, MultipartFile image) {
 
         String finalPrompt = buildPrompt(createRequestDTO);
 
-        OllamaRequestDTO request = new OllamaRequestDTO(
+        String base64Image;
+
+        try {
+            base64Image = encodeImage(image);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to process image", e);
+        }
+
+        OllamaVisionRequestDTO request = new OllamaVisionRequestDTO(
                 model,
                 finalPrompt,
-                false);
+                false,
+                List.of(base64Image));
 
         OllamaResponseDTO response = webClient
                 .post()
@@ -51,36 +63,39 @@ public class OllamaAIService implements IAIService {
     private String buildPrompt(CaptionCreateRequestDTO responseDTO) {
 
         return """
-                You are a professional social media caption writer.
+                You are an expert social media caption writer.
 
-                Generate a highly engaging social media caption.
+                Analyze the uploaded image carefully and generate a highly engaging caption based on the visual content of the image.
 
-                Caption Details:
+                Caption Requirements:
                 - Platform: %s
                 - Tone: %s
                 - Language: %s
-                - Topic: %s
+                - Additional User Context: %s
 
                 Strict Rules:
+                - Use the uploaded image as the primary context
                 - Return ONLY the caption
+                - Do NOT explain anything
                 - Do NOT return JSON
                 - Do NOT use quotation marks
-                - Do NOT explain anything
-                - Keep it short and attractive
-                - Add suitable emojis
+                - Keep the caption natural and human-like
+                - Make it engaging and attractive
+                - Add suitable emojis naturally
                 - Add 3 to 5 relevant hashtags
-                - Make it human-like and natural
-                - Avoid repeating words
+                - Avoid repetitive wording
+                - Keep it concise and platform-appropriate
 
                 Generate the caption now.
-                """.formatted(
-                responseDTO.getPlatform(),
-                responseDTO.getTone(),
-                responseDTO.getLanguage(),
-                responseDTO.getPrompt());
+                """
+                .formatted(
+                        responseDTO.getPlatform(),
+                        responseDTO.getTone(),
+                        responseDTO.getLanguage(),
+                        responseDTO.getPrompt());
     }
 
-    private String cleanAiResponse(String response){
+    private String cleanAiResponse(String response) {
         if (response == null || response.isBlank()) {
             return "";
         }
@@ -93,8 +108,12 @@ public class OllamaAIService implements IAIService {
 
         response = response.replace("\\\"", "\"");
 
-        response.replace("\n", " ").trim();
+        response = response.replace("\n", " ").trim();
 
         return response;
+    }
+
+    private String encodeImage(MultipartFile file) throws IOException {
+        return Base64.getEncoder().encodeToString(file.getBytes());
     }
 }

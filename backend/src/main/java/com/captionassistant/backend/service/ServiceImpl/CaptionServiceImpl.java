@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.captionassistant.backend.dto.Request.CaptionCreateRequestDTO;
 import com.captionassistant.backend.dto.Response.CaptionResponseDTO;
@@ -34,7 +35,7 @@ public class CaptionServiceImpl implements ICaptionService {
     private final IAIService aiService;
 
     @Override
-    public CaptionResponseDTO createCaption(CaptionCreateRequestDTO requestDTO) {
+    public CaptionResponseDTO createCaption(CaptionCreateRequestDTO requestDTO, MultipartFile image) {
 
         String email = SecurityContextHolder.getContext()
                 .getAuthentication()
@@ -64,7 +65,7 @@ public class CaptionServiceImpl implements ICaptionService {
 
         CaptionEntity caption = CaptionMapper.toEntity(requestDTO);
 
-        String aiCaption = aiService.generateCaption(requestDTO);
+        String aiCaption = aiService.generateCaption(requestDTO, image);
 
         caption.setAiCaption(aiCaption);
 
