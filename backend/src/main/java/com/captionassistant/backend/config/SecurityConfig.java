@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+
 import com.captionassistant.backend.security.jwt.JwtAuthFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/captions").hasRole("USER")
-                .requestMatchers("/group/**").hasRole("USER")
+                .requestMatchers("/api/captions/**").hasRole("USER")
+                .requestMatchers("/api/group/**").hasRole("USER")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

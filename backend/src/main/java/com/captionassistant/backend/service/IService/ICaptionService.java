@@ -13,4 +13,6 @@ public interface ICaptionService {
     List<CaptionResponseDTO> getCaptionsByGroup(Long groupId);
 
     Page<CaptionResponseDTO> getCaptionsByGroupPage(Long groupId, int page, int size);
+
+    CaptionResponseDTO getCaptionById(Long id);
 }

@@ -19,6 +19,7 @@ import com.captionassistant.backend.model.UserEntity;
 import com.captionassistant.backend.repository.CaptionGroupRepository;
 import com.captionassistant.backend.repository.CaptionRepository;
 import com.captionassistant.backend.repository.UserRepository;
+import com.captionassistant.backend.service.IService.IAIService;
 import com.captionassistant.backend.service.IService.ICaptionService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class CaptionServiceImpl implements ICaptionService {
     private final CaptionRepository captionRepository;
     private final UserRepository userRepository;
     private final CaptionGroupRepository captionGroupRepository;
+    private final IAIService aiService;
 
     @Override
     public CaptionResponseDTO createCaption(CaptionCreateRequestDTO requestDTO) {
@@ -62,7 +64,9 @@ public class CaptionServiceImpl implements ICaptionService {
 
         CaptionEntity caption = CaptionMapper.toEntity(requestDTO);
 
-        caption.setAiCaption("This is genereted behalf of ai : " + requestDTO.getPrompt());
+        String aiCaption = aiService.generateCaption(requestDTO);
+
+        caption.setAiCaption(aiCaption);
 
         caption.setUser(user);
 
@@ -100,5 +104,12 @@ public class CaptionServiceImpl implements ICaptionService {
         Page<CaptionEntity> captionPage = captionRepository.findByGroup_GroupId(groupId, pageable);
 
         return captionPage.map(CaptionMapper::toDTO);
+    }
+
+    @Override
+    public CaptionResponseDTO getCaptionById(Long id) {
+        return captionRepository.findById(id)
+                .map(CaptionMapper::toDTO)
+                .orElseThrow(() -> new IllegalArgumentException("Caption not found with id: " + id));
     }
 }

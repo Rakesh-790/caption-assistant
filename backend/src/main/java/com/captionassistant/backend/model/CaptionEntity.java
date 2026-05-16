@@ -31,6 +31,7 @@ public class CaptionEntity {
 
     private String prompt;
 
+    @Column(columnDefinition = "TEXT")
     private String aiCaption;
 
     @Column(updatable = false, nullable = false)

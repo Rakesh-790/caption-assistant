@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,17 +22,17 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-// @RequestMapping("/api")
+@RequestMapping("/api")
 public class CaptionController {
     private final ICaptionService captionService;
 
     @PostMapping("/captions")
-    public ResponseEntity<CaptionResponseDTO> createCaption(@RequestBody CaptionCreateRequestDTO request) {
+    public ResponseEntity<CaptionResponseDTO> createCaption(@Validated @RequestBody CaptionCreateRequestDTO request) {
         return ResponseEntity.ok(captionService.createCaption(request));
     }
 
     @GetMapping("/group/{groupId}")
-    public ResponseEntity<List<CaptionResponseDTO>> getCaptionsByGroup(
+    public ResponseEntity<List<CaptionResponseDTO>> getCaptionsByGroupList(
             @PathVariable Long groupId) {
 
         List<CaptionResponseDTO> captions = captionService.getCaptionsByGroup(groupId);
@@ -38,8 +40,13 @@ public class CaptionController {
         return ResponseEntity.ok(captions);
     }
 
+    @GetMapping("/captions/{id}")
+    public ResponseEntity<CaptionResponseDTO> getCaption(@PathVariable Long id) {
+        return ResponseEntity.ok(captionService.getCaptionById(id));
+    }
+
     @GetMapping("/group/{groupId}/paginated")
-    public ResponseEntity<Page<CaptionResponseDTO>> getCaptionsByGroup(
+    public ResponseEntity<Page<CaptionResponseDTO>> getCaptionsByGroupPage(
             @PathVariable Long groupId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
