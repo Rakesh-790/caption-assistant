@@ -16,6 +16,7 @@ import com.captionassistant.backend.dto.Response.CaptionResponseDTO;
 import com.captionassistant.backend.mapper.CaptionMapper;
 import com.captionassistant.backend.model.CaptionEntity;
 import com.captionassistant.backend.model.CaptionGroup;
+import com.captionassistant.backend.model.ImageEntity;
 import com.captionassistant.backend.model.UserEntity;
 import com.captionassistant.backend.repository.CaptionGroupRepository;
 import com.captionassistant.backend.repository.CaptionRepository;
@@ -33,6 +34,7 @@ public class CaptionServiceImpl implements ICaptionService {
     private final UserRepository userRepository;
     private final CaptionGroupRepository captionGroupRepository;
     private final IAIService aiService;
+    private final ImageServiceImpl imageServiceImpl;
 
     @Override
     public CaptionResponseDTO createCaption(CaptionCreateRequestDTO requestDTO, MultipartFile image) {
@@ -65,6 +67,8 @@ public class CaptionServiceImpl implements ICaptionService {
 
         CaptionEntity caption = CaptionMapper.toEntity(requestDTO);
 
+        ImageEntity savedImage = imageServiceImpl.uploadImage(image, user);
+
         String aiCaption = aiService.generateCaption(requestDTO, image);
 
         caption.setAiCaption(aiCaption);
@@ -72,6 +76,8 @@ public class CaptionServiceImpl implements ICaptionService {
         caption.setUser(user);
 
         caption.setGroup(group);
+
+        caption.setImage(savedImage);
 
         captionRepository.save(caption);
 

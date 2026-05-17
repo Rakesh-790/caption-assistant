@@ -3,6 +3,7 @@ package com.captionassistant.backend.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +22,10 @@ public class ImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imageId;
 
+    @Column(nullable = false, length = 1000)
     private String imageURL;
 
+    @Column(nullable = false)
     private String imageKey;
 
     private LocalDateTime createdAt;
