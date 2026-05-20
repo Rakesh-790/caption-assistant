@@ -8,12 +8,14 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import com.captionassistant.backend.model.UserEntity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtUtils {
@@ -47,6 +49,40 @@ public class JwtUtils {
                 .expiration(Date.from(now.plus(7, ChronoUnit.DAYS)))
                 .signWith(getKey(), Jwts.SIG.HS256)
                 .compact();
+    }
+
+    public void addAccessTokenCookie(HttpServletResponse response, String accessToken) {
+
+        ResponseCookie cookie = ResponseCookie.from(
+                "accessToken",
+                accessToken)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(15 * 60)
+                .sameSite("Lax")
+                .build();
+
+        response.addHeader(
+                "Set-Cookie",
+                cookie.toString());
+    }
+
+    public void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+
+        ResponseCookie cookie = ResponseCookie.from(
+                "refreshToken",
+                refreshToken)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(7 * 24 * 60 * 60)
+                .sameSite("Lax")
+                .build();
+
+        response.addHeader(
+                "Set-Cookie",
+                cookie.toString());
     }
 
     private Claims extractClaims(String token) {

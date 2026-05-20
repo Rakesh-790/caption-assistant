@@ -14,6 +14,7 @@ import com.captionassistant.backend.repository.UserRepository;
 import com.captionassistant.backend.security.jwt.JwtUtils;
 import com.captionassistant.backend.service.IService.IAuthService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -39,10 +40,10 @@ public class AuthServiceImpl implements IAuthService {
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
-    }
+    }   
 
     @Override
-    public AuthResponseDTO login(AuthRequestDTO request) {
+    public AuthResponseDTO login(AuthRequestDTO request, HttpServletResponse response) {
 
         UserEntity user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -53,6 +54,9 @@ public class AuthServiceImpl implements IAuthService {
 
         String accessToken = jwtUtils.generateAccessToken(user, user.getRole().name());
         String refreshToken = jwtUtils.generateRefreshToken(user);
+
+        jwtUtils.addAccessTokenCookie(response, accessToken);
+        jwtUtils.addRefreshTokenCookie(response, refreshToken);
 
         return new AuthResponseDTO(
                 accessToken,

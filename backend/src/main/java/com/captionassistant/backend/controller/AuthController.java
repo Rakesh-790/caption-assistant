@@ -8,6 +8,7 @@ import com.captionassistant.backend.dto.Request.UserRequestDTO;
 import com.captionassistant.backend.dto.Response.AuthResponseDTO;
 import com.captionassistant.backend.service.IService.IAuthService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request) {
-        return ResponseEntity.ok(authService.login(request));
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request, HttpServletResponse response) {
+        return ResponseEntity.ok(authService.login(request, response));
     }
 }
