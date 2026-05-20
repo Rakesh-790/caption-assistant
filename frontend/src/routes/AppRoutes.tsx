@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
@@ -7,10 +7,11 @@ import DashboardPage from "../pages/dashboard/DashboardPage";
 import GenerateCaptionPage from "../pages/dashboard/GenerateCaptionPage";
 import ProfilePage from "../pages/dashboard/ProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
+import ProtectedRoute from "./ProtectedRoute";
+import CreateCaptionPage from "../pages/dashboard/CreateCaptionPage";
 
 function AppRoutes() {
     return (
-        <BrowserRouter>
             <Routes>
                 <Route element={<AuthLayout />}>
                     <Route path="/login" element={<LoginPage />} />
@@ -19,8 +20,17 @@ function AppRoutes() {
 
                 <Route element={<DashboardLayout />}>
 
-                    <Route path="/" element={<DashboardPage />} />
+                    <Route path="/" element={
+                        <ProtectedRoute>
+                            <DashboardPage />
+                        </ProtectedRoute>
+                    } />
 
+                    <Route 
+                        path="create" 
+                        element={<CreateCaptionPage/>}
+                    />
+ 
                     <Route
                         path="/generate-caption"
                         element={<GenerateCaptionPage />}
@@ -35,7 +45,6 @@ function AppRoutes() {
 
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
-        </BrowserRouter>
     );
 }
 
