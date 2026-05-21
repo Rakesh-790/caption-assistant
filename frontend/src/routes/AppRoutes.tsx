@@ -8,7 +8,6 @@ import GenerateCaptionPage from "../pages/dashboard/GenerateCaptionPage";
 import ProfilePage from "../pages/dashboard/ProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProtectedRoute from "./ProtectedRoute";
-import CreateCaptionPage from "../pages/dashboard/CreateCaptionPage";
 
 function AppRoutes() {
     return (
@@ -25,11 +24,6 @@ function AppRoutes() {
                             <DashboardPage />
                         </ProtectedRoute>
                     } />
-
-                    <Route 
-                        path="create" 
-                        element={<CreateCaptionPage/>}
-                    />
  
                     <Route
                         path="/generate-caption"
