@@ -1,5 +1,5 @@
 import type { LoginRequest, RegisterRequest, User } from "../types/auth.type";
-import axiosInstance from "../api/axios";
+import axiosInstance from "../api/axiosinstance.api";
 
 export const loginUser = async (data: LoginRequest) => {
     const response = await axiosInstance.post(

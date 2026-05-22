@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import AuthLayout from "../layouts/AuthLayout";
+import AuthLayout from "../components/layouts/AuthLayout";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
-import DashboardLayout from "../layouts/DashboardLayout";
+import DashboardLayout from "../components/layouts/DashboardLayout";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import GenerateCaptionPage from "../pages/dashboard/GenerateCaptionPage";
 import ProfilePage from "../pages/dashboard/ProfilePage";
@@ -20,9 +20,9 @@ function AppRoutes() {
                 <Route element={<DashboardLayout />}>
 
                     <Route path="/" element={
-                        <ProtectedRoute>
+                        // <ProtectedRoute>
                             <DashboardPage />
-                        </ProtectedRoute>
+                        // {/* </ProtectedRoute> */}
                     } />
  
                     <Route

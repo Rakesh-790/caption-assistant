@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axios";
+import axiosInstance from "../api/axiosinstance.api";
 import type { GenerateCaptionRequest, GenerateCaptionResponse, RegenerateCaptionRequest, RegenerateCaptionResponse } from "../types/caption.type";
 
 export const generateCaption = async (

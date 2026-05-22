@@ -20,7 +20,6 @@ function GenerateCaptionPage() {
   } = useCaptionGeneration();
 
 
-
   const {
     register,
     handleSubmit,
@@ -29,7 +28,6 @@ function GenerateCaptionPage() {
   } = useForm<CaptionFormValues>({
     resolver: zodResolver(captionSchema),
   });
-
 
 
   const handleImageChange = (
@@ -46,7 +44,6 @@ function GenerateCaptionPage() {
 
     setPreviewUrl(imageUrl);
   };
-
 
 
   const onSubmit = async (
@@ -70,25 +67,20 @@ function GenerateCaptionPage() {
   };
 
 
-
   return (
     <div
       className={`
-    max-w-7xl mx-auto grid gap-8 transition-all duration-500
+    max-w-7xl mx-auto grid gap-8 transition-all duration-500 mt-27
     ${captions.length > 0 || loading
           ? "grid-cols-1 lg:grid-cols-2"
           : "grid-cols-1 place-items-center"
         }
   `}
     >
-
-
-
       {/* FORM SECTION */}
-
       <div
         className={`
-      bg-zinc-900 p-6 rounded-2xl border border-zinc-800
+      bg-zinc-900 p-3 rounded-2xl border border-zinc-800
       transition-all duration-500 w-full
       ${captions.length > 0 || loading
             ? "max-w-full"
@@ -107,7 +99,6 @@ function GenerateCaptionPage() {
         >
 
           {/* PLATFORM */}
-
           <div>
 
             <label className="block mb-2 font-medium">
@@ -143,9 +134,7 @@ function GenerateCaptionPage() {
           </div>
 
 
-
           {/* TONE */}
-
           <div>
 
             <label className="block mb-2 font-medium">
@@ -180,10 +169,7 @@ function GenerateCaptionPage() {
 
           </div>
 
-
-
           {/* LANGUAGE */}
-
           <div>
 
             <label className="block mb-2 font-medium">
@@ -218,10 +204,7 @@ function GenerateCaptionPage() {
 
           </div>
 
-
-
           {/* PROMPT */}
-
           <div>
 
             <label className="block mb-2 font-medium">
@@ -243,10 +226,7 @@ function GenerateCaptionPage() {
 
           </div>
 
-
-
           {/* IMAGE */}
-
           <div>
 
             <label className="block mb-2 font-medium">
@@ -268,10 +248,7 @@ function GenerateCaptionPage() {
 
           </div>
 
-
-
           {/* IMAGE PREVIEW */}
-
           {previewUrl && (
 
             <div className="rounded-xl overflow-hidden border border-zinc-700">
@@ -285,10 +262,7 @@ function GenerateCaptionPage() {
             </div>
           )}
 
-
-
           {/* SUBMIT BUTTON */}
-
           <button
             type="submit"
             disabled={loading}
@@ -301,10 +275,7 @@ function GenerateCaptionPage() {
 
           </button>
 
-
-
           {/* ERROR */}
-
           {error && (
             <p className="text-red-500 text-sm">
               {error}
@@ -315,12 +286,7 @@ function GenerateCaptionPage() {
 
       </div>
 
-
-
-
-
       {/* RESULT SECTION */}
-
       {(captions.length > 0 || loading) && (
 
         <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 transition-all duration-500">
@@ -329,10 +295,7 @@ function GenerateCaptionPage() {
             Generated Captions
           </h2>
 
-
-
           {/* LOADING STATE */}
-
           {loading && (
 
             <div className="space-y-4">
@@ -344,10 +307,7 @@ function GenerateCaptionPage() {
             </div>
           )}
 
-
-
           {/* RESULTS */}
-
           {!loading && (
 
             <div className="space-y-4">
