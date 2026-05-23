@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import type { LoginRequest, RegisterRequest, User } from "../types/auth.type";
-import { getUser, loginUser, registerUser } from "../service/authService";
+import { getCurrentUser, loginUser, registerUser } from "../service/authService";
 
 interface AuthContextType {
     user: User | null;
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode })=> {
 
     const checkAuth = async () => {
         try {
-            const data = await getUser();
+            const data = await getCurrentUser();
             setUser(data);
         } catch (error) {
             console.error("Error checking authentication:", error);
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode })=> {
 
     const login = async (data: LoginRequest) => {
         await loginUser(data);
-        const userData = await getUser();
+        const userData = await getCurrentUser();
         setUser(userData);
     };
 

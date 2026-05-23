@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { logoutUser } from "../../service/authService";
 
 type User = {
     email: string;
@@ -25,10 +26,22 @@ export const useAuthStore = create<AuthState>((set) => ({
         });
     },
 
-    logout: () => {
-        set({
-            user: null,
-            isAuthenticated: false,
-        });
+    logout: async () => {
+
+        try {
+
+            await logoutUser();
+
+        } catch (error) {
+
+            console.error(error);
+
+        } finally {
+
+            set({
+                user: null,
+                isAuthenticated: false,
+            });
+        }
     },
 }));

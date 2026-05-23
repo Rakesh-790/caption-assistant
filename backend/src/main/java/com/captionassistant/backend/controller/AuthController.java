@@ -8,6 +8,7 @@ import com.captionassistant.backend.dto.Request.UserRequestDTO;
 import com.captionassistant.backend.dto.Response.AuthResponseDTO;
 import com.captionassistant.backend.service.IService.IAuthService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -27,5 +28,20 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request, HttpServletResponse response) {
         return ResponseEntity.ok(authService.login(request, response));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+
+        Cookie cookie = new Cookie("token", null);
+
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // true in production HTTPS
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok("Logged out successfully");
     }
 }

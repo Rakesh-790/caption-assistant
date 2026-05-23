@@ -11,34 +11,35 @@ import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
     return (
-            <Routes>
-                <Route element={<AuthLayout />}>
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                </Route>
+        <Routes>
+            <Route element={<AuthLayout />}>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+            </Route>
 
-                <Route element={<DashboardLayout />}>
 
-                    <Route path="/" element={
-                        // <ProtectedRoute>
-                            <DashboardPage />
-                        // {/* </ProtectedRoute> */}
-                    } />
- 
-                    <Route
-                        path="/generate-caption"
-                        element={<GenerateCaptionPage />}
-                    />
+            <Route path="/" element={
+                <ProtectedRoute>
+                    <DashboardLayout />
+                </ProtectedRoute>
+            } />
 
-                    <Route
-                        path="/profile"
-                        element={<ProfilePage />}
-                    />
+            <Route path="/" element={<DashboardPage />}>
 
-                </Route>
+                <Route
+                    path="/generate-caption"
+                    element={<GenerateCaptionPage />}
+                />
 
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+                <Route
+                    path="/profile"
+                    element={<ProfilePage />}
+                />
+
+            </Route>
+
+            <Route path="*" element={<NotFoundPage />} />
+        </Routes>
     );
 }
 

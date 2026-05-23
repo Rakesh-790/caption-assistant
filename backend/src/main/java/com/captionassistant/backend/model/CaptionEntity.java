@@ -29,6 +29,7 @@ public class CaptionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long captionId;
 
+    @Column(nullable = true)
     private String prompt;
 
     @Column(columnDefinition = "TEXT")
