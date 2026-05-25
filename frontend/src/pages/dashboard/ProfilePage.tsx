@@ -1,26 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../types/store/auth.store";
 
-
 function ProfilePage() {
+
   const navigate = useNavigate();
 
   const { user, logout } = useAuthStore();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+
+    await logout();
 
     navigate("/login");
   };
 
   const userInitial =
-    user?.email?.charAt(0).toUpperCase() || "U";
+    user?.email?.substring(0, 2).toUpperCase() || "U";
 
   return (
     <div className="space-y-6">
 
       {/* Header */}
       <section>
+
         <h1 className="text-3xl font-bold">
           Profile
         </h1>
@@ -28,6 +30,7 @@ function ProfilePage() {
         <p className="text-zinc-400 mt-2">
           Manage your account settings and session.
         </p>
+
       </section>
 
       {/* User Card */}
@@ -37,18 +40,18 @@ function ProfilePage() {
 
           {/* Avatar */}
           <div className="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center text-2xl font-bold">
+
             {userInitial}
+
           </div>
 
           {/* User Info */}
           <div>
+
             <h2 className="text-xl font-semibold">
               {user?.email || "User"}
             </h2>
 
-            <p className="text-zinc-400 mt-1">
-              AI Caption Assistant User
-            </p>
           </div>
 
         </div>
@@ -64,7 +67,9 @@ function ProfilePage() {
 
         <div className="mt-6 space-y-4">
 
+          {/* Email */}
           <div>
+
             <p className="text-sm text-zinc-500">
               Email
             </p>
@@ -72,26 +77,38 @@ function ProfilePage() {
             <p className="mt-1 font-medium">
               {user?.email || "Not Available"}
             </p>
+
           </div>
 
+          {/* Authentication */}
           <div>
+
             <p className="text-sm text-zinc-500">
               Authentication
             </p>
 
             <p className="mt-1 font-medium">
-              Secure Cookie Session
+              JWT Cookie Authentication
             </p>
+
           </div>
 
+          {/* Session Status */}
           <div>
+
             <p className="text-sm text-zinc-500">
               Session Status
             </p>
 
-            <p className="mt-1 font-medium text-green-400">
-              Active
+            <p
+              className={`mt-1 font-medium ${user
+                  ? "text-green-400"
+                  : "text-red-400"
+                }`}
+            >
+              {user ? "Active" : "Inactive"}
             </p>
+
           </div>
 
         </div>

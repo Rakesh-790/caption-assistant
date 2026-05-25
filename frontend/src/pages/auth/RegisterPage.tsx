@@ -7,6 +7,9 @@ import { useAuth } from "../../context/AuthContext";
 
 const registerSchema = z
   .object({
+    username: z
+      .string("Username must be provide"),
+
     email: z
       .string("Invalid email address"),
 
@@ -98,24 +101,24 @@ function RegisterPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       
               {/* NAME */}
-              {/* <div>
+              <div>
                 <label className="block text-sm text-zinc-300 mb-2">
-                  Full Name
+                  User Name
                 </label>
       
                 <input
                   type="text"
-                  placeholder="Enter your full name"
-                  {...register("name")}
+                  placeholder="Enter your username"
+                  {...register("username")}
                   className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
                 />
       
-                {errors.name && (
+                {errors.username && (
                   <p className="text-red-400 text-sm mt-1">
-                    {errors.name.message}
+                    {errors.username.message}
                   </p>
                 )}
-              </div> */}
+              </div>
       
               {/* EMAIL */}
               <div>

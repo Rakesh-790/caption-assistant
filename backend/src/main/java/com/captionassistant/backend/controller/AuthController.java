@@ -1,5 +1,7 @@
 package com.captionassistant.backend.controller;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,7 +10,6 @@ import com.captionassistant.backend.dto.Request.UserRequestDTO;
 import com.captionassistant.backend.dto.Response.AuthResponseDTO;
 import com.captionassistant.backend.service.IService.IAuthService;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -31,17 +32,27 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletResponse response) {
+    public ResponseEntity<String> logout() {
 
-        Cookie cookie = new Cookie("token", null);
+        ResponseCookie accessTokenCookie = ResponseCookie.from("accessToken", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .sameSite("Lax")
+                .maxAge(0)
+                .build();
 
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false); // true in production HTTPS
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
+        ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .sameSite("Lax")
+                .maxAge(0)
+                .build();
 
-        response.addCookie(cookie);
-
-        return ResponseEntity.ok("Logged out successfully");
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                .body("Logged out successfully");
     }
 }

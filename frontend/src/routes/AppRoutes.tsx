@@ -18,13 +18,13 @@ function AppRoutes() {
             </Route>
 
 
-            <Route path="/" element={
+            <Route element={
                 <ProtectedRoute>
                     <DashboardLayout />
-                </ProtectedRoute>
-            } />
+                 </ProtectedRoute> 
+            } >
 
-            <Route path="/" element={<DashboardPage />}>
+                <Route path="/" element={<DashboardPage />} />
 
                 <Route
                     path="/generate-caption"

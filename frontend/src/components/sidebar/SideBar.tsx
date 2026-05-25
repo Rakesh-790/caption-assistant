@@ -5,16 +5,24 @@ import SidebarItem from "./SideItems";
 import { sidebarItems } from "./sidebar.data";
 
 import { useAuthStore } from "../../types/store/auth.store";
+import { logoutUser } from "../../service/authService";
 
 function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const logout = useAuthStore((state) => state.logout);
+  const logoutState = useAuthStore((state) => state.logout);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+
+      logoutState();
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   return (

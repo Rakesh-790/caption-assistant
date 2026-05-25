@@ -23,12 +23,12 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/caption")
 public class CaptionController {
     private final ICaptionService captionService;
 
-    @PostMapping(value = "/captions", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CaptionResponseDTO> createCaption(@Validated @ModelAttribute CaptionCreateRequestDTO request,
+    @PostMapping(value = "/generate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<CaptionResponseDTO> createCaption(@ModelAttribute CaptionCreateRequestDTO request,
             @RequestParam("images") MultipartFile image) {
         
         CaptionResponseDTO response = captionService.createCaption(request, image);

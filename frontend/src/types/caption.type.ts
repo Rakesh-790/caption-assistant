@@ -3,20 +3,33 @@ export interface GenerateCaptionRequest {
     tone: string;
     language: string;
     prompt: string;
-    image: File | null;
+    images: File | null;
 }
 
 export interface GenerateCaptionResponse {
-    caption: string;
-    imageURL: string;
-    originalPrompt: string;
+    id: number;
+    aiCaption: string;
+    createdAt: string;
+    groupId: number;
+    imageId: number;
+    language: string;
+    platform: string;
+    prompt: string;
+    tone: string;
+    userId: number;
 }
 
 export interface CaptionItem {
-    id: string;
-    content: string;
-    type: "original" | "regenerated";
+    id: number;
+    aiCaption: string;
     createdAt: string;
+    groupId: number;
+    imageId: number;
+    language: string;
+    platform: string;
+    prompt: string;
+    tone: string;
+    userId: number;
 }
 
 export interface RegenerateCaptionRequest {
@@ -26,14 +39,13 @@ export interface RegenerateCaptionRequest {
     imageURL: string;
 }
 
-export interface RegenerateCaptionResponse {
-    caption: string;
-}
 
 export interface CaptionApiError {
     message: string;
     status?: number;
 }
+
+export type RegenerateCaptionResponse = CaptionItem;
 
 export type LanguageType = "ENGLISH" | "HINDI";
 

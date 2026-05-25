@@ -12,18 +12,19 @@ export const generateCaption = async (
     formData.append("language", data.language);
     formData.append("prompt", data.prompt);
 
-    if (data.image) {
-        formData.append("image", data.image);
+    if (data.prompt) {
+        formData.append("prompt", data.prompt);
+    }
+
+    if (data.images) {
+        formData.append("image", data.images);
     }
 
     const response = await axiosInstance.post(
-        "/captions/generate",
+        "/api/caption/generate",
         formData,
         {
-            headers: {
-                "Content-Type":
-                    "multipart/form-data",
-            },
+            withCredentials: true
         }
     );
 
@@ -35,7 +36,7 @@ export const regenerateCaption = async (
 ): Promise<RegenerateCaptionResponse> => {
 
     const response = await axiosInstance.post(
-        "/captions/regenerate",
+        "/api/captions/regenerate",
         data
     );
 

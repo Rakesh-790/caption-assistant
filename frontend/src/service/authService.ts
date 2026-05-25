@@ -3,7 +3,7 @@ import axiosInstance from "../api/axiosinstance.api";
 
 export const loginUser = async (data: LoginRequest) => {
     const response = await axiosInstance.post(
-        "/api/auth/login", 
+        "/api/auth/login",
         data
     );
 
@@ -12,19 +12,24 @@ export const loginUser = async (data: LoginRequest) => {
 
 export const registerUser = async (data: RegisterRequest) => {
     const response = await axiosInstance.post(
-        "/api/auth/register", 
+        "/api/auth/signup",
         data
     );
-    
+
     return response.data;
 }
 
 export const getCurrentUser = async () => {
-    const response = await axiosInstance.get("/users/me");
+    const response = await axiosInstance.get("/api/user/me");
 
     return response.data;
 };
 
-export const logoutUser = async () =>{
-    await axiosInstance.post("/api/auth/logout")
-}
+export const logoutUser = async () => {
+    return axiosInstance.post("/api/auth/logout",
+        {},
+        {
+            withCredentials: true,
+        }
+    );
+};

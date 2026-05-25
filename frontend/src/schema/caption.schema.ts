@@ -2,12 +2,9 @@ import { z } from "zod";
 
 export const captionSchema = z.object({
 
-    image: z
-        .any()
-        .refine(
-            (files) => files?.length > 0,
-            "Image is required"
-        ),
+    images: z.instanceof(File, {
+        message: "Image is required",
+    }),
 
     platform: z
         .string()
@@ -23,7 +20,7 @@ export const captionSchema = z.object({
 
     prompt: z
         .string()
-        .min(5, "Prompt must be at least 30 characters"),
+        .min(5, "Prompt must be at least 5 characters"),
 
 });
 

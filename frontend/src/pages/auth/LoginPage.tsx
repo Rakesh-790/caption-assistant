@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../context/AuthContext";
+import { getCurrentUser } from "../../service/authService";
+import { useAuthStore } from "../../types/store/auth.store";
 
 const loginSchema = z.object({
   email: z
@@ -31,14 +33,20 @@ function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
+  const setAuth = useAuthStore((state) => state.setAuth);
+
+
   const onSubmit = async (data: LoginFormData) => {
     try {
       setLoading(true);
       setServerError("");
 
       await login(data);
+      const userData = await getCurrentUser();
 
-      navigate("/dashboard");
+      setAuth(userData);
+
+      navigate("/");
     } catch (err: any) {
       setServerError(
         err.response?.data?.message || "Login failed"

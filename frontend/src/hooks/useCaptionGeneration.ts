@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { CaptionItem, GenerateCaptionRequest, RegenerateCaptionRequest } from "../types/caption.type";
+import { generateCaption as generateCaptionapi, regenerateCaption as regenerateCaptionapi } from "../api/caption.api";
 
 
 export const useCaptionGeneration = () => {
@@ -24,19 +25,12 @@ export const useCaptionGeneration = () => {
 
             setError(null);
 
-            const response = await generateCaption(data);
+            const response = await generateCaptionapi(data);
 
-            const newCaption: CaptionItem = {
-                id: crypto.randomUUID(),
-
-                content: response.caption,
-
-                type: "original",
-
-                createdAt: new Date().toISOString(),
-            };
-
-            setCaptions([newCaption]);
+            setCaptions((prev) => [
+                response,
+                ...prev,
+            ]);
 
             return response;
 
@@ -66,20 +60,10 @@ export const useCaptionGeneration = () => {
 
             setError(null);
 
-            const response = await regenerateCaption(data);
-
-            const regeneratedCaption: CaptionItem = {
-                id: crypto.randomUUID(),
-
-                content: response.caption,
-
-                type: "regenerated",
-
-                createdAt: new Date().toISOString(),
-            };
+            const response = await regenerateCaptionapi(data);
 
             setCaptions((prev) => [
-                regeneratedCaption,
+                response,
                 ...prev,
             ]);
 

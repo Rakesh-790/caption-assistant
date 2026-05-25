@@ -5,6 +5,7 @@ import type z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LANGUAGE_OPTIONS, PLATFORM_OPTIONS, TONE_OPTIONS } from "../../constant/caption.constant";
+import CaptionCard from "../../components/captions/CaptionCard";
 
 type CaptionFormValues = z.infer<typeof captionSchema>;
 
@@ -38,7 +39,7 @@ function GenerateCaptionPage() {
 
     if (!file) return;
 
-    setValue("image", file);
+    setValue("images", file);
 
     const imageUrl = URL.createObjectURL(file);
 
@@ -57,7 +58,7 @@ function GenerateCaptionPage() {
         tone: data.tone,
         language: data.language,
         prompt: data.prompt,
-        image: data.image,
+        images: data.images,
       });
 
     } catch (error) {
@@ -240,9 +241,9 @@ function GenerateCaptionPage() {
               className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700"
             />
 
-            {errors.image && (
+            {errors.images && (
               <p className="text-red-500 text-sm mt-1">
-                {String(errors.image.message)}
+                {String(errors.images.message)}
               </p>
             )}
 
@@ -256,7 +257,7 @@ function GenerateCaptionPage() {
               <img
                 src={previewUrl}
                 alt="Preview"
-                className="w-full h-72 object-cover"
+                className="w-full h-55 object-cover"
               />
 
             </div>
@@ -314,35 +315,10 @@ function GenerateCaptionPage() {
 
               {captions.map((caption) => (
 
-                <div
+                <CaptionCard
                   key={caption.id}
-                  className="bg-zinc-800 border border-zinc-700 p-4 rounded-xl"
-                >
-
-                  <div className="flex justify-between items-center mb-3">
-
-                    <span className="text-xs uppercase text-zinc-400">
-                      {caption.type}
-                    </span>
-
-                    <button
-                      className="text-sm text-blue-400 hover:underline"
-                      onClick={() =>
-                        navigator.clipboard.writeText(
-                          caption.content
-                        )
-                      }
-                    >
-                      Copy
-                    </button>
-
-                  </div>
-
-                  <p className="whitespace-pre-wrap leading-relaxed">
-                    {caption.content}
-                  </p>
-
-                </div>
+                  caption={caption}
+                />
               ))}
 
             </div>
