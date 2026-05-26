@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../context/AuthContext";
 import { getCurrentUser } from "../../service/authService";
 import { useAuthStore } from "../../types/store/auth.store";
+import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
   email: z
@@ -24,6 +25,7 @@ function LoginPage() {
 
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -100,12 +102,26 @@ function LoginPage() {
               Password
             </label>
 
-            <input
-              type="password"
-              placeholder="Enter your password"
-              {...register("password")}
-              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                {...register("password")}
+                className="w-full px-4 py-3 pr-12 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-300 hover:text-white transition"
+              >
+                {showPassword ? (
+                  <EyeOff size={15} />
+                ) : (
+                  <Eye size={15} />
+                )}
+              </button>
+            </div>
 
             {errors.password && (
               <p className="text-red-400 text-sm mt-1">

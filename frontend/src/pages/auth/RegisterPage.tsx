@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../context/AuthContext";
+import { Eye, EyeOff } from "lucide-react";
 
 const registerSchema = z
   .object({
@@ -13,7 +14,7 @@ const registerSchema = z
     email: z
       .string("Invalid email address"),
 
-      password: z
+    password: z
       .string()
       .min(8, "Password must be at least 8 characters")
       .regex(
@@ -47,160 +48,175 @@ const registerSchema = z
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 function RegisterPage() {
-    const navigate = useNavigate();
-    const { register : registerUser } = useAuth();
+  const navigate = useNavigate();
+  const { register: registerUser } = useAuth();
 
-    const [loading, setLoading] = useState(false);
-    const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<RegisterFormData>({
-        resolver: zodResolver(registerSchema),
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+  });
 
-    const onSubmit = async (data: RegisterFormData) => {
-        try {
-            setLoading(true);
-            setServerError("");
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      setLoading(true);
+      setServerError("");
 
-            const{confirmPassword, ...payload} = data;
+      const { confirmPassword, ...payload } = data;
 
-            await registerUser(payload);
+      await registerUser(payload);
 
-            navigate("/login");
-        } catch (err: any) {
-            setServerError(
-                err.response?.data?.message || "Registration failed"
-            );
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <div className="min-h-screen bg-black flex items-center justify-center p-4">
-          <div className="w-full sm:w-[460px] bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
-      
-            <h1 className="text-3xl font-bold text-white text-center mb-2">
-              Create Account
-            </h1>
-      
-            <p className="text-zinc-400 text-center mb-8">
-              Register to start generating captions
-            </p>
-      
-            {serverError && (
-              <div className="bg-red-500/10 border border-red-500 text-red-400 text-sm p-3 rounded-lg mb-4">
-                {serverError}
-              </div>
-            )}
-      
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      
-              {/* NAME */}
-              <div>
-                <label className="block text-sm text-zinc-300 mb-2">
-                  User Name
-                </label>
-      
-                <input
-                  type="text"
-                  placeholder="Enter your username"
-                  {...register("username")}
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
-                />
-      
-                {errors.username && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {errors.username.message}
-                  </p>
-                )}
-              </div>
-      
-              {/* EMAIL */}
-              <div>
-                <label className="block text-sm text-zinc-300 mb-2">
-                  Email
-                </label>
-      
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  {...register("email")}
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
-                />
-      
-                {errors.email && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-      
-              {/* PASSWORD */}
-              <div>
-                <label className="block text-sm text-zinc-300 mb-2">
-                  Password
-                </label>
-      
-                <input
-                  type="password"
-                  placeholder="Create password"
-                  {...register("password")}
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
-                />
-      
-                {errors.password && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-      
-              {/* CONFIRM PASSWORD */}
-              <div>
-                <label className="block text-sm text-zinc-300 mb-2">
-                  Confirm Password
-                </label>
-      
-                <input
-                  type="password"
-                  placeholder="Confirm your password"
-                  {...register("confirmPassword")}
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
-                />
-      
-                {errors.confirmPassword && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
-              </div>
-      
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-3 rounded-xl font-semibold disabled:opacity-50"
-              >
-                {loading ? "Creating Account..." : "Register"}
-              </button>
-            </form>
-      
-            <p className="text-zinc-400 text-sm text-center mt-6">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-blue-500 hover:text-blue-400 transition"
-              >
-                Login
-              </Link>
-            </p>
-          </div>
-        </div>
+      navigate("/login");
+    } catch (err: any) {
+      setServerError(
+        err.response?.data?.message || "Registration failed"
       );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="w-full sm:w-[460px] bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
+
+        <h1 className="text-3xl font-bold text-white text-center mb-2">
+          Create Account
+        </h1>
+
+        <p className="text-zinc-400 text-center mb-8">
+          Register to start generating captions
+        </p>
+
+        {serverError && (
+          <div className="bg-red-500/10 border border-red-500 text-red-400 text-sm p-3 rounded-lg mb-4">
+            {serverError}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+
+          {/* NAME */}
+          <div>
+            <label className="block text-sm text-zinc-300 mb-2">
+              User Name
+            </label>
+
+            <input
+              type="text"
+              placeholder="Enter your username"
+              {...register("username")}
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+            />
+
+            {errors.username && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.username.message}
+              </p>
+            )}
+          </div>
+
+          {/* EMAIL */}
+          <div>
+            <label className="block text-sm text-zinc-300 mb-2">
+              Email
+            </label>
+
+            <input
+              type="email"
+              placeholder="Enter your email"
+              {...register("email")}
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+            />
+
+            {errors.email && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          {/* PASSWORD */}
+          <div>
+            <label className="block text-sm text-zinc-300 mb-2">
+              Password
+            </label>
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                {...register("password")}
+                className="w-full px-4 py-3 pr-12 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-300 hover:text-white transition"
+              >
+                {showPassword ? (
+                  <EyeOff size={15} />
+                ) : (
+                  <Eye size={15} />
+                )}
+              </button>
+            </div>
+
+            {errors.password && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          {/* CONFIRM PASSWORD */}
+          <div>
+            <label className="block text-sm text-zinc-300 mb-2">
+              Confirm Password
+            </label>
+
+            <input
+              type="password"
+              placeholder="Confirm your password"
+              {...register("confirmPassword")}
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+            />
+
+            {errors.confirmPassword && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-3 rounded-xl font-semibold disabled:opacity-50"
+          >
+            {loading ? "Creating Account..." : "Register"}
+          </button>
+        </form>
+
+        <p className="text-zinc-400 text-sm text-center mt-6">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-blue-500 hover:text-blue-400 transition"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default RegisterPage;
