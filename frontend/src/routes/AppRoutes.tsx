@@ -8,6 +8,7 @@ import GenerateCaptionPage from "../pages/dashboard/GenerateCaptionPage";
 import ProfilePage from "../pages/dashboard/ProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProtectedRoute from "./ProtectedRoute";
+import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 
 function AppRoutes() {
     return (
@@ -15,13 +16,17 @@ function AppRoutes() {
             <Route element={<AuthLayout />}>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route
+                    path="/reset-password"
+                    element={<ResetPasswordPage />}
+                />
             </Route>
 
 
             <Route element={
                 <ProtectedRoute>
                     <DashboardLayout />
-                 </ProtectedRoute> 
+                </ProtectedRoute>
             } >
 
                 <Route path="/" element={<DashboardPage />} />

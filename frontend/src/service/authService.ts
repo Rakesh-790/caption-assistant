@@ -1,4 +1,4 @@
-import type { LoginRequest, RegisterRequest } from "../types/auth.type";
+import type { LoginRequest, RegisterRequest, ResetPasswordRequest } from "../types/auth.type";
 import axiosInstance from "../api/axiosinstance.api";
 
 export const loginUser = async (data: LoginRequest) => {
@@ -33,3 +33,13 @@ export const logoutUser = async () => {
         }
     );
 };
+
+export const resetPassword = async (data: ResetPasswordRequest) => {
+
+    const response = await axiosInstance.post(
+        "/api/auth/reset-password",
+        data
+    );
+
+    return response.data;
+}

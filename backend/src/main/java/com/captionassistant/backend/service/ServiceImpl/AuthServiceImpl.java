@@ -1,18 +1,22 @@
 package com.captionassistant.backend.service.ServiceImpl;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.captionassistant.backend.constants.Role;
 import com.captionassistant.backend.dto.Request.AuthRequestDTO;
+import com.captionassistant.backend.dto.Request.ForgetPasswordRequestDTO;
+import com.captionassistant.backend.dto.Request.ResetPasswordRequestDTO;
 import com.captionassistant.backend.dto.Request.UserRequestDTO;
 import com.captionassistant.backend.dto.Response.AuthResponseDTO;
 import com.captionassistant.backend.model.UserEntity;
 import com.captionassistant.backend.repository.UserRepository;
 import com.captionassistant.backend.security.jwt.JwtUtils;
 import com.captionassistant.backend.service.IService.IAuthService;
+import com.captionassistant.backend.service.IService.IEmailService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,7 @@ public class AuthServiceImpl implements IAuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
+    private final IEmailService emailService;
 
     @Override
     public void signup(UserRequestDTO request) {
@@ -64,6 +69,42 @@ public class AuthServiceImpl implements IAuthService {
                 user.getEmail(),
                 user.getRole().name() 
         );
+    }
+
+    @Override
+    public void forgetPassword(ForgetPasswordRequestDTO passwordRequestDTO) {
+        UserEntity entity = userRepository.findByEmail(passwordRequestDTO.getEmail()).
+                        orElseThrow(() -> new RuntimeException("User Not found"));
+
+        String resetToken = UUID.randomUUID().toString();
+
+        entity.setResetToken(resetToken);
+
+        entity.setResetTokenExpiry(LocalDateTime.now().plusMinutes(15));
+
+        userRepository.save(entity);
+
+        String restLink = "http://localhost:5173/reset-password?token=" + resetToken;
+
+        emailService.sendPasswordRestMail(entity.getEmail(), restLink);
+        
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO) {
+        UserEntity entity = userRepository.findByResetToken(resetPasswordRequestDTO.getToken())
+                                .orElseThrow(() -> new RuntimeException("Invalid Token"));
+
+        if(entity.getResetTokenExpiry().isBefore(LocalDateTime.now())){
+            throw new RuntimeException("token has been expaired");
+        }
+
+        entity.setPassword(passwordEncoder.encode(resetPasswordRequestDTO.getNewPassword()));
+
+        entity.setResetToken(null);
+        entity.setResetTokenExpiry(null);
+
+        userRepository.save(entity);
     }
 }
 

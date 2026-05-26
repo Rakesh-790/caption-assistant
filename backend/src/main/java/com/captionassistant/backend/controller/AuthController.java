@@ -6,11 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.captionassistant.backend.dto.Request.AuthRequestDTO;
+import com.captionassistant.backend.dto.Request.ForgetPasswordRequestDTO;
+import com.captionassistant.backend.dto.Request.ResetPasswordRequestDTO;
 import com.captionassistant.backend.dto.Request.UserRequestDTO;
 import com.captionassistant.backend.dto.Response.AuthResponseDTO;
 import com.captionassistant.backend.service.IService.IAuthService;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -54,5 +57,20 @@ public class AuthController {
                 .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
                 .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
                 .body("Logged out successfully");
+    }
+
+    @PostMapping("forget-password")
+    public ResponseEntity<?> forgetPassword(@Valid @RequestBody ForgetPasswordRequestDTO passwordRequestDTO) {
+        authService.forgetPassword(passwordRequestDTO);
+        return ResponseEntity.ok("Reset token is generated and Email sent successfully");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(
+            @RequestBody @Valid ResetPasswordRequestDTO request) {
+
+        authService.resetPassword(request);
+
+        return ResponseEntity.ok("Password reset successful");
     }
 }

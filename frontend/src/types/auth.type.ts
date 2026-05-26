@@ -18,3 +18,8 @@ export interface User {
     role: string;
     createdAt: string;
 }
+
+export interface ResetPasswordRequest {
+    token: string;
+    newPassword: string;
+}

@@ -31,6 +31,12 @@ public class UserEntity {
     @Column(unique = true)
     private String email;
 
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -38,7 +44,6 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<CaptionEntity> captions;
-
 
     @OneToMany(mappedBy = "user")
     private List<ImageEntity> images;
