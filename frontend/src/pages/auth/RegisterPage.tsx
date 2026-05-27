@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "../../context/AuthContext";
 import { Eye, EyeOff } from "lucide-react";
+import { useAuthStore } from "../../types/store/auth.store";
 
 const registerSchema = z
   .object({
@@ -49,7 +49,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 function RegisterPage() {
   const navigate = useNavigate();
-  const { register: registerUser } = useAuth();
+  const  registerUser  = useAuthStore((state) => state.register);
 
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");

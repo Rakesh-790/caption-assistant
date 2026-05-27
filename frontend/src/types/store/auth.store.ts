@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { logoutUser } from "../../service/authService";
+import { getCurrentUser, loginUser, logoutUser, registerUser } from "../../service/authService";
 
 type User = {
     email: string;
@@ -7,9 +7,18 @@ type User = {
 
 type AuthState = {
     user: User | null;
+
     isAuthenticated: boolean;
 
+    isLoading: boolean;
+
+    checkAuth: () => Promise<void>;
+
     setAuth: (user: User) => void;
+
+    login: (data: any) => Promise<void>;
+
+    register: (data: any) => Promise<void>;
 
     logout: () => void;
 };
@@ -19,11 +28,66 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     isAuthenticated: false,
 
+    isLoading: true,
+
     setAuth: (user) => {
         set({
             user,
             isAuthenticated: true,
         });
+    },
+
+    login: async (data) => {
+
+        try {
+    
+            const response = await loginUser(data);
+    
+            set({
+                user: response.data,
+                isAuthenticated: true,
+            });
+    
+        } catch (error) {
+    
+            throw error;
+        }
+    },
+
+    register: async (data) => {
+
+        try {
+    
+            const response = await registerUser(data);
+    
+            set({
+                user: response.data,
+                isAuthenticated: true,
+            });
+    
+        } catch (error) {
+    
+            throw error;
+        }
+    },
+
+    checkAuth: async () => {
+        try {
+            const user = await getCurrentUser();
+            set({
+                user,
+                isAuthenticated: true
+            })
+        } catch (error) {
+            set({
+                user: null,
+                isAuthenticated: false
+            });
+        } finally {
+            set({
+                isLoading: false
+            })
+        }
     },
 
     logout: async () => {

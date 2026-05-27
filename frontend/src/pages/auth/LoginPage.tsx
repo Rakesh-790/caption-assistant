@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "../../context/AuthContext";
 import { getCurrentUser } from "../../service/authService";
 import { useAuthStore } from "../../types/store/auth.store";
 import { Eye, EyeOff } from "lucide-react";
@@ -21,7 +20,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const login  = useAuthStore((state) => state.login);
 
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");

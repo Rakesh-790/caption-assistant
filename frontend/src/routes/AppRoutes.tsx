@@ -23,22 +23,26 @@ function AppRoutes() {
             </Route>
 
 
-            <Route element={
-                <ProtectedRoute>
-                    <DashboardLayout />
-                </ProtectedRoute>
-            } >
+            <Route element={<DashboardLayout />} >
 
                 <Route path="/" element={<DashboardPage />} />
 
                 <Route
                     path="/generate-caption"
-                    element={<GenerateCaptionPage />}
+                    element={
+                        <ProtectedRoute>
+                            <GenerateCaptionPage />
+                        </ProtectedRoute>
+                    }
                 />
 
                 <Route
                     path="/profile"
-                    element={<ProfilePage />}
+                    element={
+                        <ProtectedRoute>
+                            <ProfilePage />
+                        </ProtectedRoute>
+                    }
                 />
 
             </Route>

@@ -25,7 +25,7 @@ function DashboardPage() {
           </h2>
 
           <p className="text-zinc-400 mt-4 leading-relaxed">
-            Create captions tailored for Instagram, LinkedIn,
+            Create captions tailored for Instagram, FaceBook,
             Twitter, and more using AI-powered generation.
           </p>
 
