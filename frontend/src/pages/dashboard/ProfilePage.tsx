@@ -9,7 +9,7 @@ function ProfilePage() {
 
   const handleLogout = async () => {
 
-    await logout();
+    logout();
 
     navigate("/login");
   };
@@ -27,19 +27,23 @@ function ProfilePage() {
           Profile
         </h1>
 
-        <p className="text-zinc-400 mt-2">
+        <p className="text-zinc-600 dark:text-zinc-400 mt-2">
           Manage your account settings and session.
         </p>
 
       </section>
 
       {/* User Card */}
-      <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+      <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 
+        transition-colors duration-300"
+      >
 
         <div className="flex items-center gap-4">
 
           {/* Avatar */}
-          <div className="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center text-2xl font-bold">
+          <div className="w-16 h-16 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white flex 
+            items-center justify-center text-2xl font-bold"
+          >
 
             {userInitial}
 
@@ -59,7 +63,9 @@ function ProfilePage() {
       </section>
 
       {/* Account Information */}
-      <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+      <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 
+        transition-colors duration-300"
+      >
 
         <h3 className="text-xl font-semibold">
           Account Information
@@ -70,7 +76,7 @@ function ProfilePage() {
           {/* Email */}
           <div>
 
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               Email
             </p>
 
@@ -83,7 +89,7 @@ function ProfilePage() {
           {/* Authentication */}
           <div>
 
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               Authentication
             </p>
 
@@ -96,14 +102,14 @@ function ProfilePage() {
           {/* Session Status */}
           <div>
 
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               Session Status
             </p>
 
             <p
               className={`mt-1 font-medium ${user
-                  ? "text-green-400"
-                  : "text-red-400"
+                ? "text-green-400"
+                : "text-red-400"
                 }`}
             >
               {user ? "Active" : "Inactive"}
@@ -116,7 +122,9 @@ function ProfilePage() {
       </section>
 
       {/* Security */}
-      <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+      <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 
+        transition-colors duration-300"
+      >
 
         <h3 className="text-xl font-semibold">
           Security
@@ -130,13 +138,15 @@ function ProfilePage() {
       </section>
 
       {/* Logout */}
-      <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+      <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 
+        transition-colors duration-300"
+      >
 
         <h3 className="text-xl font-semibold">
           Session
         </h3>
 
-        <p className="text-zinc-400 mt-2">
+        <p className="text-zinc-600 dark:text-zinc-400 mt-2">
           Logout from your current session securely.
         </p>
 

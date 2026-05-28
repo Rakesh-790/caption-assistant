@@ -17,10 +17,10 @@ function SidebarItem({
         <Link
             to={path}
             className={`
-        flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200
+        flex items-center gap-3 rounded-xl px-4 py-3 transition-colors duration-200
         ${isActive
-                    ? "bg-zinc-800 text-white"
-                    : "text-zinc-400 hover:bg-zinc-800 hover:text-white"
+                    ? "bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
                 }
       `}
         >

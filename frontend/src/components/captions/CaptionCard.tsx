@@ -12,10 +12,12 @@ function CaptionCard({ caption }: Props) {
     } = extractHashtags(caption.aiCaption);
 
     return (
-        <div className="bg-zinc-900 p-5 rounded-xl space-y-4">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 rounded-xl 
+            space-y-4 transition-colors duration-300"
+        >
 
             {/* Caption */}
-            <p className="text-white text-lg leading-relaxed">
+            <p className="text-zinc-900 dark:text-white text-lg leading-relaxed">
                 {cleanCaption}
             </p>
 
@@ -25,14 +27,7 @@ function CaptionCard({ caption }: Props) {
                 {hashtags.map((tag: string) => (
                     <span
                         key={tag}
-                        className="
-                            px-3
-                            py-1
-                            bg-zinc-800
-                            rounded-full
-                            text-blue-400
-                            text-sm
-                        "
+                        className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 rounded-full text-blue-600 dark:text-blue-400 text-sm"
                     >
                         {tag}
                     </span>
@@ -41,7 +36,7 @@ function CaptionCard({ caption }: Props) {
             </div>
 
             {/* Footer */}
-            <div className="flex justify-between text-xs text-zinc-500">
+            <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
 
                 <span>
                     {caption.platform}

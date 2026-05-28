@@ -81,7 +81,7 @@ function GenerateCaptionPage() {
       {/* FORM SECTION */}
       <div
         className={`
-      bg-zinc-900 p-3 rounded-2xl border border-zinc-800
+      bg-white dark:bg-zinc-900 p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800
       transition-all duration-500 w-full
       ${captions.length > 0 || loading
             ? "max-w-full"
@@ -108,7 +108,9 @@ function GenerateCaptionPage() {
 
             <select
               {...register("platform")}
-              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700"
+              className="w-full p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 
+                dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 
+                focus:ring-blue-500"
             >
 
               <option value="">
@@ -144,7 +146,8 @@ function GenerateCaptionPage() {
 
             <select
               {...register("tone")}
-              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700"
+              className="w-full p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 
+              text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
 
               <option value="">
@@ -179,7 +182,8 @@ function GenerateCaptionPage() {
 
             <select
               {...register("language")}
-              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700"
+              className="w-full p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 
+              text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
 
               <option value="">
@@ -216,7 +220,8 @@ function GenerateCaptionPage() {
               {...register("prompt")}
               rows={5}
               placeholder="Describe your post..."
-              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 resize-none"
+              className="w-full p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 
+              text-zinc-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             {errors.prompt && (
@@ -238,7 +243,8 @@ function GenerateCaptionPage() {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700"
+              className="w-full p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 
+              dark:border-zinc-700 text-zinc-900 dark:text-white"
             />
 
             {errors.images && (
@@ -252,7 +258,7 @@ function GenerateCaptionPage() {
           {/* IMAGE PREVIEW */}
           {previewUrl && (
 
-            <div className="rounded-xl overflow-hidden border border-zinc-700">
+            <div className="rounded-xl overflow-hidden border border-zinc-300 dark:border-zinc-700">
 
               <img
                 src={previewUrl}
@@ -267,7 +273,8 @@ function GenerateCaptionPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-white text-black py-3 rounded-lg font-semibold hover:bg-zinc-200 transition disabled:opacity-50"
+            className="w-full bg-zinc-900 dark:bg-white text-white dark:text-black py-3 rounded-lg font-semibold 
+            hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors duration-200 disabled:opacity-50"
           >
 
             {loading
@@ -290,7 +297,7 @@ function GenerateCaptionPage() {
       {/* RESULT SECTION */}
       {(captions.length > 0 || loading) && (
 
-        <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 transition-all duration-500">
+        <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 transition-all duration-500">
 
           <h2 className="text-2xl font-bold mb-6">
             Generated Captions
@@ -301,9 +308,7 @@ function GenerateCaptionPage() {
 
             <div className="space-y-4">
 
-              <div className="animate-pulse bg-zinc-800 h-32 rounded-xl" />
-
-              <div className="animate-pulse bg-zinc-800 h-32 rounded-xl" />
+              <div className="animate-pulse bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl" />
 
             </div>
           )}

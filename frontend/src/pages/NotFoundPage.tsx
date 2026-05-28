@@ -3,7 +3,7 @@ import { Home, ArrowLeft } from "lucide-react";
 
 function NotFoundPage() {
     return (
-        <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+        <div className="min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-white flex items-center justify-center px-6 transition-colors duration-300">
 
             <div className="max-w-xl w-full text-center">
 
@@ -18,7 +18,7 @@ function NotFoundPage() {
                 </h2>
 
                 {/* Description */}
-                <p className="mt-4 text-zinc-400 text-base md:text-lg leading-relaxed">
+                <p className="mt-4 text-zinc-600 dark:text-zinc-400 text-base md:text-lg leading-relaxed">
                     The page you are looking for does not exist,
                     may have been removed, or the URL might be incorrect.
                 </p>
@@ -28,7 +28,7 @@ function NotFoundPage() {
 
                     <Link
                         to="/"
-                        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-black font-medium hover:bg-zinc-200 transition"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black font-medium hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors duration-200"
                     >
                         <Home size={18} />
                         Go Home
@@ -36,7 +36,7 @@ function NotFoundPage() {
 
                     <button
                         onClick={() => window.history.back()}
-                        className="flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-700 hover:bg-zinc-900 transition"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors duration-200"
                     >
                         <ArrowLeft size={18} />
                         Go Back

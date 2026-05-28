@@ -49,7 +49,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 function RegisterPage() {
   const navigate = useNavigate();
-  const  registerUser  = useAuthStore((state) => state.register);
+  const registerUser = useAuthStore((state) => state.register);
 
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -83,14 +83,15 @@ function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="w-full sm:w-[460px] bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
+    <div className="min-h-screen bg-zinc-100 dark:bg-black flex items-center justify-center p-4 transition-colors duration-300">
 
-        <h1 className="text-3xl font-bold text-white text-center mb-2">
+      <div className="w-full sm:w-[420px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 shadow-2xl transition-colors duration-300">
+
+        <h1 className="text-3xl font-bold text-zinc-900 dark:text-white text-center mb-2">
           Create Account
         </h1>
 
-        <p className="text-zinc-400 text-center mb-8">
+        <p className="text-zinc-600 dark:text-zinc-400 text-center mb-8">
           Register to start generating captions
         </p>
 
@@ -104,7 +105,7 @@ function RegisterPage() {
 
           {/* NAME */}
           <div>
-            <label className="block text-sm text-zinc-300 mb-2">
+            <label className="block text-sm text-zinc-700 dark:text-zinc-300 mb-2">
               User Name
             </label>
 
@@ -112,7 +113,7 @@ function RegisterPage() {
               type="text"
               placeholder="Enter your username"
               {...register("username")}
-              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-white outline-none focus:border-blue-500 transition-colors duration-200"
             />
 
             {errors.username && (
@@ -124,7 +125,7 @@ function RegisterPage() {
 
           {/* EMAIL */}
           <div>
-            <label className="block text-sm text-zinc-300 mb-2">
+            <label className="block text-sm text-zinc-700 dark:text-zinc-300 mb-2">
               Email
             </label>
 
@@ -132,7 +133,7 @@ function RegisterPage() {
               type="email"
               placeholder="Enter your email"
               {...register("email")}
-              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-white outline-none focus:border-blue-500 transition-colors duration-200"
             />
 
             {errors.email && (
@@ -144,7 +145,7 @@ function RegisterPage() {
 
           {/* PASSWORD */}
           <div>
-            <label className="block text-sm text-zinc-300 mb-2">
+            <label className="block text-sm text-zinc-700 dark:text-zinc-300 mb-2">
               Password
             </label>
 
@@ -153,13 +154,13 @@ function RegisterPage() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 {...register("password")}
-                className="w-full px-4 py-3 pr-12 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+                className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-white outline-none focus:border-blue-500 transition-colors duration-200"
               />
 
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-300 hover:text-white transition"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200"
               >
                 {showPassword ? (
                   <EyeOff size={15} />
@@ -178,7 +179,7 @@ function RegisterPage() {
 
           {/* CONFIRM PASSWORD */}
           <div>
-            <label className="block text-sm text-zinc-300 mb-2">
+            <label className="block text-sm text-zinc-700 dark:text-zinc-300 mb-2">
               Confirm Password
             </label>
 
@@ -186,7 +187,7 @@ function RegisterPage() {
               type="password"
               placeholder="Confirm your password"
               {...register("confirmPassword")}
-              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500 transition"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-white outline-none focus:border-blue-500 transition-colors duration-200 placeholder:text-zinc-500 dark:placeholder:text-zinc-400"
             />
 
             {errors.confirmPassword && (
@@ -205,7 +206,7 @@ function RegisterPage() {
           </button>
         </form>
 
-        <p className="text-zinc-400 text-sm text-center mt-6">
+        <p className="text-zinc-600 dark:text-zinc-400 text-sm text-center mt-6">
           Already have an account?{" "}
           <Link
             to="/login"

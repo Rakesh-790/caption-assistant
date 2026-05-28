@@ -30,30 +30,19 @@ function Sidebar() {
 
   return (
     <aside
-      className="
-        hidden
-        md:flex
-        w-64
-        flex-col
-        justify-between
-        bg-white
-        dark:bg-zinc-900
-        border-r
-        border-zinc-200
-        dark:border-zinc-800
-        transition-colors
-        duration-300
-        "
+      className="hidden md:flex w-64 flex-col justify-between bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800
+      transition-colors duration-300"
     >
       {/* Top Section */}
       <div>
 
         {/* Logo */}
-        <div className="h-16 flex items-center justify-center px-4 border-b border-zinc-800 ">
-          <h1 className="text-xl font-bold flex items-center gap-1">
+        <div className="h-16 flex items-center justify-center px-4 border-b border-zinc-200 dark:border-zinc-800">
+          <h1 className="text-xl font-bold flex items-center gap-1 text-zinc-900 dark:text-white">
             Caption Assistant
-            <ThemeToggle />
           </h1>
+          
+            <ThemeToggle />
         </div>
 
         {/* Navigation */}
@@ -72,14 +61,16 @@ function Sidebar() {
       </div>
 
       {/* Bottom Section */}
-      <div className="p-4 border-t border-zinc-800">
+      <div className="p-4 border-t border-zinc-200 dark:border-zinc-800">
 
         {
           isLoading ? null : isAuthenticated ? (
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all duration-200"
+              className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-zinc-600 dark:text-zinc-400 
+              hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-all 
+              duration-200"
             >
               <LogOut size={20} />
 
@@ -92,7 +83,9 @@ function Sidebar() {
 
             <button
               onClick={() => navigate("/login")}
-              className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all duration-200"
+              className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-zinc-600 dark:text-zinc-400 
+              hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-all 
+              duration-200"
             >
               <LogIn size={20} />
 
